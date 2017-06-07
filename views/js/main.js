@@ -211,7 +211,6 @@ function getAdj(x){
       return scientific_default;
   }
 }
-
 // Pulls noun out of array using random number sent from generator
 function getNoun(y) {
   switch(y) {
@@ -465,14 +464,42 @@ var resizePizzas = function(size) {
   console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
 };
 
-window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
-  pizzasDiv.appendChild(pizzaElementGenerator(i));
-}
+/**
+ * We don't need create all the 100 pizzas once, we can only create the needed pizzas on the current view.
+ * @param  {[int]} var i            [The number of pizzals will be generated]
+ * @return {[void]}     [None]
+ */
+var number=2;
+function generatePizzasAsNeeded(i){
+  for (var j = number; j < i+number; j++) {
+    var pizzasDiv = document.getElementById("randomPizzas");
+    pizzasDiv.appendChild(pizzaElementGenerator(j));
+  }
+};
 
+var winH = document.body.clientHeight; //页面可视区域高度 
+
+window.performance.mark("mark_start_generating"); // collect timing data
+//Scroll pages then load new Pizzas.
+window.onscroll =function(){
+    //var pageH = $(document.body).height(); //整个页面高度
+    var pageH = document.body.scrollHeight;
+    var scrollT = document.body.scrollTop; //滚动条top  
+    var aa = (pageH - winH - scrollT) / winH; 
+    //console.log("page heigh is "+pageH+", scroll height is "+ scrollT+",页面可视区域高度"+winH);
+    if (aa < 0.02) {
+      if(number<100){
+        generatePizzasAsNeeded(6);
+        number+=6;
+      }
+    }
+};
+
+
+// runs updatePositions on scroll
+//window.addEventListener('scroll', pizzasLoad);
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
 window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
