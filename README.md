@@ -29,12 +29,26 @@ Some useful tips to help you get started:
 1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
 
 Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+#### Learning from this project
+1. Compress JPG/PNG to small size by using [tinypng](https://tinypng.com).
+2. Configure your grunt env by reading [GRUNT tool](http://www.gruntjs.net), follow the sample to create your Gruntjs.file and package.json files.
+3. Make sure some css files in your index.html are labeled "media=\'print'".
+4. Makre sure some js files in your index.html are labeled "async";
+5. Run grunt command to make sure all index/css/js files are compressed.
+6. Then measure the performance through Pagespeed finally to make sure it is over 90. Actually you have to measure it after every step above.
 
 #### Part 2: Optimize Frames per Second in pizza.html
 
 To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
 
 You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+
+#### Learing from pizza project
+1. Know what css style will impact layout/painting/composite, for example, css style.transform is a good way to improve performance, because it is only have impact on composite. You can learn more from [CSS Triggers website](https://csstriggers.com).
+2. Reduce the number of moving pizzas to 15, because each row is 5, so no need to create 100 pizzas.
+3. Moving out all common DOM operations of our 2 main loops, try your best to rendering DOM in your loop.
+4. Using new animation function requestAnimationFrame to improve web animation performance, learn more by going [MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame) and [Creative JS](http://creativejs.com/resources/requestanimationframe/index.html).
+5. The following documents are helpful for you, please help read them carefully if meet some problems. Especially you have to know more about Chrome Dev Tools, which can help you meet the target.
 
 ### Optimization Tips and Tricks
 * [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
