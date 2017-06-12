@@ -459,7 +459,7 @@ var resizePizzas = function(size) {
     var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
     var dx = determineDx(randomPizzas[0], size);
     var newwidth = (randomPizzas[0].offsetWidth + dx) + 'px';
-    console.log("How many randomPizzaContainer " +randomPizzaContainer +" were found.");
+    //console.log("How many randomPizzaContainer " +randomPizzaContainer +" were found.");
     for (var i = 0; i < randomPizzas.length; i++) {
       randomPizzas[i].style.width = newwidth;
     }
@@ -569,7 +569,7 @@ function updatePositions() {
 
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((currentScrollY / 1250) + (i % 5));
-    console.log("phase = "+phase);
+    //console.log("phase = "+phase);
     //var randomX = Math.sin(Math.random()*window.windowWidth);
     items[i].style.transform = "translateX(" + 100*phase+ "px)"; //Transform only composite, not layout and paint again, so that will increas performance
   }
@@ -591,13 +591,13 @@ window.addEventListener('scroll', onScroll, false);
 document.addEventListener('DOMContentLoaded', function() {
   var screenWidth = screen.availWidth;
   var screenHeight = screen.availHeight;
-  console.log("DOMContentLoaded is true.");
+  //console.log("DOMContentLoaded is true.");
   var s = 256;
   var cols = screenWidth / s;
   var rows = screenHeight / s;                  // Generate pizza total based on available screen dimensions
   var pizzaTotal = Math.ceil(cols * rows);      // ceil err on the side of good visuals
   var movingPizzas = document.getElementById("movingPizzas1");// move out the element of the loop below
-
+  console.log("pizzaTotal is "+ pizzaTotal);
   for (var i = 0; i < 50; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
