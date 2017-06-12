@@ -357,12 +357,6 @@ var makeRandomPizza = function() {
   return pizza;
 };
 
-/** Clone DOM element 
-for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
-  pizzasDiv.appendChild(pizzasDiv.cloneNode());
-}
-*/
 // returns a DOM element for each pizza
 var pizzaElementGenerator = function(i) {
   var pizzaContainer,             // contains pizza title, image and list of ingredients
@@ -474,52 +468,13 @@ var resizePizzas = function(size) {
   console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
 };
 
-
-// This for-loop actually creates and appends all of the pizzas when the page loads
-/**
- * We don't need create all the 100 pizzas once, we can only create the needed pizzas on the current view.
- * @param  {[int]} var i            [The number of pizzals will be generated]
- * @return {[void]}     [None]
- 
-
-var number=2;
-function generatePizzasAsNeeded(i){
-  var pizzasDiv = document.getElementById("randomPizzas");
-  for (var j = number; j < i+number; j++) {
-    pizzasDiv.appendChild(pizzaElementGenerator(j));
-  }
-};
-*/
-var winH = document.body.clientHeight; //页面可视区域高度 
-
 window.performance.mark("mark_start_generating"); // collect timing data
 // This for-loop actually creates and appends all of the pizzas when the page loads
-
 var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
-
-//Scroll pages then load new Pizzas.
-/**
-window.onscroll =function(){
-    //var pageH = $(document.body).height(); //整个页面高度
-    var pageH = document.body.scrollHeight;
-    var scrollT = document.body.scrollTop; //滚动条top  
-    var aa = (pageH - winH - scrollT) / winH; 
-    //console.log("page heigh is "+pageH+", scroll height is "+ scrollT+",页面可视区域高度"+winH);
-    if (aa < 0.02) {
-      if(number<100){
-        generatePizzasAsNeeded(6);
-        number+=6;
-      }
-    }
-};
-*/
-
-// runs updatePositions on scroll
-//window.addEventListener('scroll', pizzasLoad);
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
 window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
@@ -563,14 +518,11 @@ function updatePositions() {
 
   //getElementsByClassName is better than query selector method on performance.
   var items = document.getElementsByClassName('mover');
-  //var items = document.querySelectorAll('.mover');
-  //console.log("How many items will be transformed "+items.length);
   var currentScrollY = lastScrollY;
 
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((currentScrollY / 1250) + (i % 5));
     //console.log("phase = "+phase);
-    //var randomX = Math.sin(Math.random()*window.windowWidth);
     items[i].style.transform = "translateX(" + 100*phase+ "px)"; //Transform only composite, not layout and paint again, so that will increas performance
   }
 
@@ -595,10 +547,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var s = 256;
   var cols = screenWidth / s;
   var rows = screenHeight / s;                  // Generate pizza total based on available screen dimensions
-  var pizzaTotal = Math.ceil(cols * rows);      // ceil err on the side of good visuals
   var movingPizzas = document.getElementById("movingPizzas1");// move out the element of the loop below
-  console.log("pizzaTotal is "+ pizzaTotal);
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 15; i++) { //15 pizzas is okay to make animation work, no need 100 pizzas 
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -609,7 +559,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.left = elem.basicLeft + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     movingPizzas.appendChild(elem);
-    //document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
