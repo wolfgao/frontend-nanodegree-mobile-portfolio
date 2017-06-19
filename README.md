@@ -1,9 +1,5 @@
 ## Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
-
-To get started, check out the repository and inspect the code.
-
 ### Getting started
 
 #### Part 1: Optimize PageSpeed Insights score for index.html
@@ -25,7 +21,26 @@ To get started, check out the repository and inspect the code.
 
 4.拷贝ngrok提供的公网域名，打开谷歌的[PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)，然后就可以测试你网站的性能，但是如果访问谷歌站点有问题，需要配置你的VPN。如果需要更多信息，请访问[如何结合grunt/pagespeed/ngrok的文章](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
 
-5. 可以根据下面性能提高提示方法，不断提高Pagespeed分数，超过90份就可以提交项目了。
+5. 压缩图片，可以使用[tinypng](https://tinypng.com)或者另外一个工具[Reduced Image](http://www.reduceimages.com),把img和views/images两个目录下的图片都给检查一下，能压的都压一下，尤其是pizzeria.jpg,原件300多K，确实影响加载时间，而我们的html源文件对此图片的要求是```img style="width: 100px;```，压缩后其实只有不到5K。
+6. 就是内连CSS文件和小的js文件，把它们压缩后，如果很小可以直接内连在html文件
+7. css的media属性，如果确实和rendor无关，可以加这个属性，比如media="print"。
+  ```<link href="css/print.min.css" rel="stylesheet" media="print">```
+8. JS的异步处理，对谷歌的分析程序和rendor无关，因此可以异步或者defer，我这里用的是异步处理。
+```<script async src="http://www.google-analytics.com/analytics.js"></script>```
+
+9.对谷歌的字体css样式，变成JS来调用，这个很好处理加速了性能
+``` <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Open Sans:400,700']
+      }
+    });
+  </script>
+  ```
+ 
+10. 其他资源. 
     1）Compress JPG/PNG to small size by using [tinypng](https://tinypng.com).
     2）Configure your grunt env by reading [GRUNT tool](http://www.gruntjs.net), follow the sample to create your Gruntjs.file and package.json files.
     3）Make sure some css files in your index.html are labeled "media=\'print'".
