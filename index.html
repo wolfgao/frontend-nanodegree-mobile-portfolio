@@ -59,7 +59,7 @@
       <div class="content">
         <ul>
           <li>
-            <img src="img/2048.png">
+            <img src="img/2048.jpg">
             <a href="project-2048.html">Build Your Own 2048!</a>
             <p>I made my own version of 2048. How cool is that!?</p>
           </li>
@@ -89,8 +89,15 @@
       </footer>
     </div>
   </body>
+  <!-- 嗯，web 字体对速度的影响有多大呢？测量一下吧 -->
+  <!-- 我自己测差不多16ms左右 因为和样式关系不大，因此标注为media="none"，放在最后-->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Open Sans:400,700']
+      }
+    });
+  </script>
 </html>
-<link href="css/style.min.css" rel="stylesheet">
-<!-- 嗯，web 字体对速度的影响有多大呢？测量一下吧 -->
-<!-- 我自己测差不多16ms左右 因为和样式关系不大，因此标注为media="none"，放在最后-->
-<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" media="none">
