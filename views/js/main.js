@@ -423,7 +423,7 @@ var resizePizzas = function(size) {
   function determineDx (elem, size) {
     var oldWidth = elem.offsetWidth;
     var windowWidth = document.getElementById("randomPizzas").offsetWidth;
-    console.log("element.width is "+oldWidth+" ,pizzaContainer width is "+windowWidth);
+    //console.log("element.width is "+oldWidth+" ,pizzaContainer width is "+windowWidth);
     var oldSize = oldWidth / windowWidth;
 
     // Changes the slider value to a percent width
@@ -548,7 +548,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = Math.floor(screenWidth / s);
   var rows = Math.floor(screenHeight / s)+1; //多一行覆盖最下面一行，保证整个可见面积全部覆盖。           
   var totalMovingPizzas = rows*cols; // Generate pizza total based on available screen dimensions, 5 pizzas for each row is enough.
-  alert(totalMovingPizzas);
   var movingPizzas = document.getElementById("movingPizzas1");// move out the element of the loop below
   for (var i = 0; i < totalMovingPizzas; i++) {
     var elem = document.createElement('img');
