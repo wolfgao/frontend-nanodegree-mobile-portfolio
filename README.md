@@ -1,8 +1,6 @@
 ## Website Performance Optimization portfolio project
 
-### Getting started
-
-#### Part 1: Optimize PageSpeed Insights score for index.html
+### Part 1: Optimize PageSpeed Insights score for index.html
 
 1. 配置你的Web Server, 如果用的Mac, 本身就带有Python, 如果其他系统，请先安装Python，这里我们用的是Python自带的Web Server
 
@@ -19,7 +17,7 @@
   $> ./ngrok http 8080
   ```
 
-4.拷贝ngrok提供的公网域名，打开谷歌的[PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)，然后就可以测试你网站的性能，但是如果访问谷歌站点有问题，需要配置你的VPN。如果需要更多信息，请访问[如何结合grunt/pagespeed/ngrok的文章](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+4. 拷贝ngrok提供的公网域名，打开谷歌的[PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)，然后就可以测试你网站的性能，但是如果访问谷歌站点有问题，需要配置你的VPN。如果需要更多信息，请访问[如何结合grunt/pagespeed/ngrok的文章](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
 
 5. 压缩图片，可以使用[tinypng](https://tinypng.com)或者另外一个工具[Reduced Image](http://www.reduceimages.com),把img和views/images两个目录下的图片都给检查一下，能压的都压一下，尤其是pizzeria.jpg,原件300多K，确实影响加载时间，而我们的html源文件对此图片的要求是```img style="width: 100px;```，压缩后其实只有不到5K。
 6. 就是内连CSS文件和小的js文件，把它们压缩后，如果很小可以直接内连在html文件
@@ -47,7 +45,7 @@
 + Compress JPG/PNG to small size by using [tinypng](https://tinypng.com).
 + Configure your grunt env by reading [GRUNT tool](http://www.gruntjs.net), follow the sample to create your Gruntjs.file and package.json files.
 
-#### Part 2: Optimize Frames per Second in pizza.html
+### Part 2: Optimize Frames per Second in pizza.html
 
 1. 这个项目最主要的是要学会利用Chrome的Dev tools来进行动画优化，如何使用这个工具，可以参考文章[Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
 
