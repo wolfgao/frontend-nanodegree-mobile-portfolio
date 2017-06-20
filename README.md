@@ -31,18 +31,16 @@
 ``` js
 <script async src="http://www.google-analytics.com/analytics.js"></script>
 ```
-
 9.对谷歌的字体css样式，变成JS来调用，这个很好处理加速了性能
 ``` js
-<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"">
-  </script>
-  <script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js""></script>
+<script>
    WebFont.load({
       google: {
         families: ['Open Sans:400,700']
       }
     });
-  </script>
+</script>
 ```
  
 10. 其他资源. 
