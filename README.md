@@ -24,12 +24,17 @@
 5. 压缩图片，可以使用[tinypng](https://tinypng.com)或者另外一个工具[Reduced Image](http://www.reduceimages.com),把img和views/images两个目录下的图片都给检查一下，能压的都压一下，尤其是pizzeria.jpg,原件300多K，确实影响加载时间，而我们的html源文件对此图片的要求是```img style="width: 100px;```，压缩后其实只有不到5K。
 6. 就是内连CSS文件和小的js文件，把它们压缩后，如果很小可以直接内连在html文件
 7. css的media属性，如果确实和rendor无关，可以加这个属性，比如media="print"。
-  ```<link href="css/print.min.css" rel="stylesheet" media="print">```
+``` html
+<link href="css/print.min.css" rel="stylesheet" media="print">
+```
 8. JS的异步处理，对谷歌的分析程序和rendor无关，因此可以异步或者defer，我这里用的是异步处理。
-```<script async src="http://www.google-analytics.com/analytics.js"></script>```
+``` js
+<script async src="http://www.google-analytics.com/analytics.js"></script>
+```
 
 9.对谷歌的字体css样式，变成JS来调用，这个很好处理加速了性能
-``` <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"">
+``` js
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"">
   </script>
   <script>
    WebFont.load({
@@ -38,15 +43,15 @@
       }
     });
   </script>
-  ```
+```
  
 10. 其他资源. 
-    1）Compress JPG/PNG to small size by using [tinypng](https://tinypng.com).
-    2）Configure your grunt env by reading [GRUNT tool](http://www.gruntjs.net), follow the sample to create your Gruntjs.file and package.json files.
-    3）Make sure some css files in your index.html are labeled "media=\'print'".
-    4）Makre sure some js files in your index.html are labeled "async";
-    5）Run grunt command to make sure all index/css/js files are compressed.
-    6）Then measure the performance through Pagespeed finally to make sure it is over 90. Actually you have to measure it after every step above.
+1）Compress JPG/PNG to small size by using [tinypng](https://tinypng.com).
+2）Configure your grunt env by reading [GRUNT tool](http://www.gruntjs.net), follow the sample to create your Gruntjs.file and package.json files.
+3）Make sure some css files in your index.html are labeled "media=\'print'".
+4）Makre sure some js files in your index.html are labeled "async";
+5）Run grunt command to make sure all index/css/js files are compressed.
+6）Then measure the performance through Pagespeed finally to make sure it is over 90. Actually you have to measure it after every step above.
 
 #### Part 2: Optimize Frames per Second in pizza.html
 
@@ -54,9 +59,27 @@
 
 2. 学习体会：
 1） CSS Style将会影响layout/painting/composite, 我们在循环里面要尽量减少layout／painting，composite的开销不大，可以把所有需要relayout的语句都转化为composite。例如， css style.transform is a good way to improve performance, because it is only have impact on composite. You can learn more from [CSS Triggers website](https://csstriggers.com).
-2）减少移动pizzas数目仅仅满足屏幕需要即可.
+2）减少移动pizzas数目仅仅满足屏幕需要即可.比如changePizzaSizes(size)函数，和之前比把DOM的操作移出来，不要loop每次都去DOM操作，真正循环的语句只有一个，大大减少了浏览器的开销。
+``` js
+function changePizzaSizes(size) {
+    var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
+    var dx = determineDx(randomPizzas[0], size);
+    var newwidth = (randomPizzas[0].offsetWidth + dx) + 'px';
+    for (var i = 0; i < randomPizzas.length; i++) {
+      randomPizzas[i].style.width = newwidth;
+    }
+  }
+```
 3) 在两个大循环里面（changeSize和updatePosition），把一些DOM操作语句都要移出来，否则开销很大。
-4) 使用requestAnimationFrame API来提高动画性能, learn more by going [MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame) and [Creative JS](http://creativejs.com/resources/requestanimationframe/index.html).
+4) 使用requestAnimationFrame API来提高动画性能, learn more by going [MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame) and [Creative JS](http://creativejs.com/resources/requestanimationframe/index.html)。它实际上是一个回归调用。
+``` js
+updatePositions(){
+  //Todo, your code here
+  ...
+  reqeustAnimationFrame(updatePositions);
+}
+
+```
 5. CSS querySelector的性能比getElementById要差，尽可能替换。
 6. 下面列举了很多性能优化提示和信息，非常有帮助，尤其要借助Chrome的Dev Tools一点点来优化，祝成功.
 
